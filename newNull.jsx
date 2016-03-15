@@ -32,6 +32,7 @@ var label = 12; // Brown label
 var curComp = app.project.activeItem;
 if ((curComp == null) || !(curComp instanceof CompItem)) {
 	alert('There is no active comp.');
+	return;
 }
 
 // Find id of source null, if there is one
@@ -56,12 +57,12 @@ app.beginUndoGroup('ft-Toolbar - ' + scriptName);
 var newNull;
 if (id) {
 	// if there is source null in project
-	newNull = this.objRef.layers.add( app.project.item(id) );
+	newNull = curComp.layers.add( app.project.item(id) );
 	newNull.property("ADBE Transform Group").property("ADBE Opacity").setValue(0);
 	newNull.property("ADBE Transform Group").property("ADBE Anchor Point").setValue([0,0]);
 } else {
 	// if there is no null, create new one
-	newNull = this.objRef.layers.addNull();
+	newNull = curComp.layers.addNull();
 	newNull.source.name = name;
 }
 newNull.label = label;
