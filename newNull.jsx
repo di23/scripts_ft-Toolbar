@@ -41,6 +41,7 @@ var item;
 for (var i = 1, l = app.project.numItems; i <= l; i++) {
 	item = app.project.item(i);
 	if ((item.name == name) &&
+		(item.label == label) &&
 		(item instanceof FootageItem) &&
 		(item.mainSource instanceof SolidSource) &&
 		equalArrs( item.mainSource.color, [1,1,1] ) &&
@@ -64,8 +65,9 @@ if (id) {
 	// if there is no null, create new one
 	newNull = curComp.layers.addNull();
 	newNull.source.name = name;
+	newNull.source.label = label;
+	newNull.label = label;
 }
-newNull.label = label;
 
 app.endUndoGroup();
 
