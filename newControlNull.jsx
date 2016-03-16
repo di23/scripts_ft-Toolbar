@@ -26,8 +26,10 @@ function equalArrs( arr1, arr2 ) {
 
 var scriptName = 'newNull';
 
-var name = 'null';
-var label = 12; // Brown label
+var name = 'controller';
+var size = [50,50];
+var sourceName = 'null_' + size[0];
+var label = 11; // Orange label
 
 // Check for selected comp
 var curComp = app.project.activeItem;
