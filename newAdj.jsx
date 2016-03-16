@@ -34,6 +34,8 @@ if ((curComp == null) || !(curComp instanceof CompItem)) {
 
 var size = [curComp.width, curComp.height];
 var sourceName = 'adj_' + size[0] + 'x' + size[1];
+var sourceLabel = 5;
+var adjColor = [1,1,1];
 
 // Find id of source adj, if there is one
 var id;
@@ -41,9 +43,10 @@ var item;
 for (var i = 1, l = app.project.numItems; i <= l; i++) {
 	item = app.project.item(i);
 	if ((item.name == sourceName) &&
+		(item.label == sourceLabel) &&
 		(item instanceof FootageItem) &&
 		(item.mainSource instanceof SolidSource) &&
-		equalArrs( item.mainSource.color, solidColor ) &&
+		equalArrs( item.mainSource.color, adjColor ) &&
 		equalArrs( [item.width,item.height], size )) {
 
 		id = i;
@@ -54,13 +57,17 @@ for (var i = 1, l = app.project.numItems; i <= l; i++) {
 app.beginUndoGroup('ft-Toolbar - ' + scriptName);
 
 // Creating
-var newSolid;
+var newAdj;
 if (id) {
 	// if there is source adj in project
-	newSolid = curComp.layers.add( app.project.item(id) );
+	newAdj = curComp.layers.add( app.project.item(id) );
+	newAdj.adjustmentLayer = true;
 } else {
 	// if there is no adj, create new one
-	newSolid = curComp.layers.addSolid(solidColor, sourceName, size[0], size[1], 1);
+	newAdj = curComp.layers.addSolid(adjColor, sourceName, size[0], size[1], 1);
+	newAdj.adjustmentLayer = true;
+	newAdj.source.label = sourceLabel;
+	newAdj.label = sourceLabel;
 }
 
 app.endUndoGroup();
