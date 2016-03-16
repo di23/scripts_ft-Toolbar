@@ -34,6 +34,7 @@ if ((curComp == null) || !(curComp instanceof CompItem)) {
 
 var size = [curComp.width, curComp.height];
 var sourceName = 'solid_' + size[0] + 'x' + size[1];
+var solidColor = [0,0,0]; // Black
 
 // Find id of source null, if there is one
 var id;
@@ -43,6 +44,7 @@ for (var i = 1, l = app.project.numItems; i <= l; i++) {
 	if ((item.name == sourceName) &&
 		(item instanceof FootageItem) &&
 		(item.mainSource instanceof SolidSource) &&
+		equalArrs( item.mainSource.color, solidColor ) &&
 		equalArrs( [item.width,item.height], size )) {
 
 		id = i;
@@ -59,7 +61,7 @@ if (id) {
 	newSolid = curComp.layers.add( app.project.item(id) );
 } else {
 	// if there is no solid, create new one
-	newSolid = curComp.layers.addSolid([0,0,0], sourceName, size[0], size[1], 1);
+	newSolid = curComp.layers.addSolid(solidColor, sourceName, size[0], size[1], 1);
 }
 
 app.endUndoGroup();
