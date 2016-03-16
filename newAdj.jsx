@@ -1,10 +1,10 @@
 /*
-	newSolid
+	newAdj
 	Author: Yahor Hayeuski
 	Script for ft-Toolbar
 
-	Create new black solid in active comp with the same size. The source item always stays the same,
-	so there is no mess	in project panel with many items like: "Black Solid 1", "Black Solid  2", etc.
+	Create new adjustment layer in active comp with the same size. The source item always stays the same,
+	so there is no mess	in project panel.
 */
 
 (function () {
@@ -23,7 +23,7 @@ function equalArrs( arr1, arr2 ) {
 	return true;
 }
 
-var scriptName = 'newSolid';
+var scriptName = 'newAdj';
 
 // Check for selected comp
 var curComp = app.project.activeItem;
@@ -33,10 +33,9 @@ if ((curComp == null) || !(curComp instanceof CompItem)) {
 }
 
 var size = [curComp.width, curComp.height];
-var sourceName = 'solid_' + size[0] + 'x' + size[1];
-var solidColor = [0,0,0]; // Black
+var sourceName = 'adj_' + size[0] + 'x' + size[1];
 
-// Find id of source null, if there is one
+// Find id of source adj, if there is one
 var id;
 var item;
 for (var i = 1, l = app.project.numItems; i <= l; i++) {
@@ -57,10 +56,10 @@ app.beginUndoGroup('ft-Toolbar - ' + scriptName);
 // Creating
 var newSolid;
 if (id) {
-	// if there is source solid in project
+	// if there is source adj in project
 	newSolid = curComp.layers.add( app.project.item(id) );
 } else {
-	// if there is no solid, create new one
+	// if there is no adj, create new one
 	newSolid = curComp.layers.addSolid(solidColor, sourceName, size[0], size[1], 1);
 }
 
