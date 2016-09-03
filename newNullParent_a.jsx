@@ -24,10 +24,12 @@ function equalArrs( arr1, arr2 ) {
 	return true;
 }
 
-var scriptName = 'newNull';
+var scriptName = 'newNullParent_a';
 
-var name = 'null';
+var name = 'parent';
 var label = 12; // Brown label
+var size = [100,100];
+var sourceName = 'null';
 
 // Check for selected comp
 var curComp = app.project.activeItem;
@@ -41,7 +43,7 @@ var id;
 var item;
 for (var i = 1, l = app.project.numItems; i <= l; i++) {
 	item = app.project.item(i);
-	if ((item.name == name) &&
+	if ((item.name == sourceName) &&
 		(item.label == label) &&
 		(item instanceof FootageItem) &&
 		(item.mainSource instanceof SolidSource) &&
@@ -61,14 +63,15 @@ if (id) {
 	// if there is source null in project
 	newNull = curComp.layers.add( app.project.item(id) );
 	newNull.property("ADBE Transform Group").property("ADBE Opacity").setValue(0);
-	newNull.property("ADBE Transform Group").property("ADBE Anchor Point").setValue([0,0]);
 } else {
 	// if there is no null, create new one
 	newNull = curComp.layers.addNull();
-	newNull.source.name = name;
+	newNull.source.name = sourceName;
 	newNull.source.label = label;
 	newNull.label = label;
+	newNull.property("ADBE Transform Group").property("ADBE Anchor Point").setValue([size[0]/2,size[1]/2]);
 }
+newNull.name = name;
 
 app.endUndoGroup();
 
